@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./app.css";
-import PostLists from "./components/post_lists";
+import PostLists from "./components/post_lists/post_lists";
 import CreatePost from "./components/create_post/create_post";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App({imageUploader}) {

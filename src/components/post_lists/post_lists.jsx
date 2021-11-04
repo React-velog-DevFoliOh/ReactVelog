@@ -1,5 +1,5 @@
 import React from "react";
-import PostList from "./post_list";
+import PostList from "../post_list/post_list";
 import styles from "./post_lists.module.css";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
