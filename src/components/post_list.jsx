@@ -5,7 +5,7 @@ const PostList = ({ post }) => {
   return (
     <li className={styles.post}>
         <img className={styles.thumbnail}
-          src="https://cdn.imweb.me/thumbnail/20201107/2ecf0c7c29449.jpg"
+          src={post.thumbnail || "https://cdn.imweb.me/thumbnail/20201107/2ecf0c7c29449.jpg"}
           alt=""
         />
       <div className={styles.contents}>

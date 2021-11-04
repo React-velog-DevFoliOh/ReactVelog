@@ -3,7 +3,7 @@ import "./app.css";
 import PostLists from "./components/post_lists";
 import CreatePost from "./components/create_post/create_post";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-function App() {
+function App({imageUploader}) {
   const [posts, setPosts] = useState([]);
 
   const submitPost = async (data) => {
@@ -22,13 +22,13 @@ function App() {
       .then((response) => response.json())
       .then((result) => setPosts(result.results))
       .catch((error) => console.log("error", error))
-  );
+  ,[]);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<PostLists posts={posts} />} />
-        <Route path="/post" element={<CreatePost submitPost={submitPost} />} />
+        <Route path="/post" element={<CreatePost submitPost={submitPost} imageUploader={imageUploader}/>} />
       </Routes>
     </BrowserRouter>
   );

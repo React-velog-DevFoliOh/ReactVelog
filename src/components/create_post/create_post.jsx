@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import styles from "./create_post.module.css";
 import { useNavigate } from "react-router-dom";
+import ThumbnailInput from "./../thumbnail_input/thumbnail_input";
 
-const CreatePost = ({submitPost}) => {
+const CreatePost = ({ submitPost, imageUploader }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState();
-  const [tags, setTags] = useState();
+  const [tag, setTag] = useState();
+  const [tags, setTags] = useState(["완", "투"]);
   const [body, setBody] = useState();
+  const [thumbnail, setThumbnail] = useState({fileName:null, fileURL:null});
 
   const goBack = () => {
     navigate("/");
@@ -14,13 +17,16 @@ const CreatePost = ({submitPost}) => {
   const onClick = (event) => {
     if (event.target == null) return;
     event.preventDefault();
-    submitPost({id:Date.now(), title, tags, body});
+    submitPost({ id: Date.now(), title, tags, body, thumbnail:thumbnail.fileURL});
     goBack();
   };
   const onChange = (event, setFn) => {
     if (event.target == null) return;
     event.preventDefault();
     setFn(event.target.value);
+  };
+  const onThumbnailChange = thumbnail => {
+    setThumbnail({fileName:thumbnail.name, fileURL:thumbnail.url});
   };
 
   return (
@@ -36,7 +42,7 @@ const CreatePost = ({submitPost}) => {
           <input
             className={styles.tag}
             placeholder="태그를 입력하세요"
-            onChange={(event) => onChange(event, setTags)}
+            onChange={(event) => onChange(event, setTag)}
           />
         </div>
         <textarea
@@ -62,8 +68,15 @@ const CreatePost = ({submitPost}) => {
           나가기
         </div>
         <div className={styles.buttons}>
+          <ThumbnailInput
+          name={thumbnail.fileName}
+            imageUploader={imageUploader}
+            onThumbnailChange={onThumbnailChange}
+          />
           <button className={styles.temporary}>임시저장</button>
-          <button className={styles.submit} onClick={onClick}>출간하기</button>
+          <button className={styles.submit} onClick={onClick}>
+            출간하기
+          </button>
         </div>
       </footer>
     </div>

@@ -1,0 +1,22 @@
+.input{
+    display: none;
+}
+.thumbnail{
+    display: flex;
+    height: 2.5rem;
+    font-size: 1.125rem;
+    margin-left: 1rem;
+    border: none;
+    outline: none;
+    cursor:pointer; 
+    padding: 0 1.25rem;
+    border-radius: 4px;
+    font-weight: bold;
+    align-items: center;
+    background-color: rgb(233, 236, 239);
+    color:rgb(73, 80, 87);
+}
+.thumbnailIcon{
+    margin-right: 0.3rem;
+    font-size: 1.5rem;
+}

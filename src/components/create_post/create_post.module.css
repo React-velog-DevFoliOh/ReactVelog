@@ -57,12 +57,12 @@
     font-family: inherit;
 }
 
-  .body::-webkit-input-placeholder {
+.body::-webkit-input-placeholder {
     font-style: italic;
-  }
-  .body:-ms-input-placeholder {
+}
+.body:-ms-input-placeholder {
     font-style: italic;
-  }
+}
   
 .footer{
     bottom: 0;
@@ -98,9 +98,11 @@
 .buttons{
     justify-content: flex-end;
     align-items: center;
+    display: flex;
 }
 
 .temporary, .submit{
+    display: flex;
     height: 2.5rem;
     font-size: 1.125rem;
     margin-left: 1rem;
@@ -110,14 +112,14 @@
     padding: 0 1.25rem;
     border-radius: 4px;
     font-weight: bold;
-}
-
-.temporary{
-    background-color: rgb(233, 236, 239);
-    color:rgb(73, 80, 87);
+    align-items: center;
 }
 
 .submit{
     background-color: #B39DDB;
     color: white;
+}
+
+button:hover{
+    opacity: 0.8;
 }
