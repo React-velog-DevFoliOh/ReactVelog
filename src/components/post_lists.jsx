@@ -1,9 +1,15 @@
 import React from "react";
 import PostList from "./post_list";
 import styles from "./post_lists.module.css";
-import { BsSearch } from 'react-icons/bs';
+import { BsSearch } from "react-icons/bs";
+import { useNavigate } from 'react-router-dom';
 
 const PostLists = ({ posts }) => {
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate('/post');
+  };
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -21,8 +27,10 @@ const PostLists = ({ posts }) => {
           ></path>
         </svg>
         <div className={styles.tools}>
-          <a className={styles.search}><BsSearch/></a>
-          <button className={styles.add}>새 글 작성</button>
+          <a className={styles.search}>
+            <BsSearch />
+          </a>
+          <button className={styles.add} onClick={onClick}>새 글 작성</button>
         </div>
       </header>
       <section className={styles.posts}>
