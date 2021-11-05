@@ -42,8 +42,7 @@
     display: flex;
     justify-content: space-between;
     & > div {
-      width: 47.5%;
-
+      width: 360px;
       .prev,
       .next {
         width: 100%;
@@ -89,8 +88,8 @@
 
         .prevBtn,
         .nextBtn {
-          width: 2rem;
-          height: 2rem;
+          width: 2rem !important;
+          height: 2rem !important;
           padding: 0.25rem;
           border-radius: 1rem;
           border: 1px solid #b39ddb;
@@ -111,8 +110,12 @@
             line-height: 0.75rem;
           }
           h3 {
+            width: 280px;
             margin-top: 0.5rem;
             font-size: 1.125rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
           }
         }
       }
@@ -120,6 +123,9 @@
         justify-content: flex-end;
         & > div {
           align-items: flex-end;
+          h3 {
+            text-align: end;
+          }
         }
       }
     }
@@ -151,6 +157,12 @@
     & > div {
       display: flex;
       justify-content: flex-end;
+    }
+  }
+  .commentsList {
+    margin-top: 2.5rem;
+    p {
+      margin: 1rem 0;
     }
   }
 }

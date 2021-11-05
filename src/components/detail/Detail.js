@@ -8,24 +8,36 @@ import "./detail.scss";
 
 function Detail({ posts }) {
   const navigate = useNavigate();
-  const { postTitle } = useParams();
+  const { postId } = useParams();
 
   const [post, setPost] = useState();
   const [comments, setComments] = useState();
   const [inputComment, setInputComment] = useState();
+  const [prevPost, setPrevPost] = useState();
+  const [nextPost, setNextPost] = useState();
 
   useEffect(() => {
     setPost(
       posts.filter((post) => {
-        return post.title == postTitle;
+        return post.id == postId;
       })[0]
     );
-    getComments(post?.id);
+
+    getComments(postId);
     return () => {
       setPost();
       setComments();
     };
-  }, [postTitle]);
+  }, [postId]);
+  useEffect(() => {
+    setPrevPost(posts[posts.indexOf(post) - 1]);
+    setNextPost(posts[posts.indexOf(post) + 1]);
+
+    return () => {
+      setPrevPost();
+      setNextPost();
+    };
+  }, [post]);
   const serverUrl = "https://limitless-sierra-67996.herokuapp.com/v1";
   // const getPosts = () => {
   //   const url = serverUrl + "/posts/" + postId;
@@ -54,7 +66,7 @@ function Detail({ posts }) {
           return results.results;
         }
       })
-      .catch((err) => alert(err));
+      .catch((err) => console.error(err));
   };
 
   const renderDateString = (updatedAt) => {
@@ -86,14 +98,12 @@ function Detail({ posts }) {
   };
 
   const renderPrev = () => {
-    const prevPost = posts[posts.indexOf(post) - 1];
-
     if (prevPost) {
       return (
         <div
           className="prev"
           onClick={() => {
-            navigate(`/${prevPost.title}`);
+            navigate(`/${prevPost.id}`);
           }}
         >
           <RiArrowLeftLine className="prevBtn" />
@@ -106,13 +116,12 @@ function Detail({ posts }) {
     }
   };
   const renderNext = () => {
-    const nextPost = posts[posts.indexOf(post) + 1];
     if (nextPost) {
       return (
         <div
           className="next"
           onClick={() => {
-            navigate(`/${nextPost.title}`);
+            navigate(`/${nextPost.id}`);
           }}
         >
           <div>
@@ -128,19 +137,27 @@ function Detail({ posts }) {
   const onInput = (e) => {
     setInputComment(e.target.value);
   };
-  const submitComment = async () => {
-    const response = await fetch(serverUrl + "/comments", {
+  const submitComment = () => {
+    const data = {
+      postId: post?.id,
+      body: inputComment,
+    };
+    console.log(data);
+    fetch(serverUrl + "/comments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        id: Date.now(),
-        postId: post?.id,
-        body: inputComment,
-      }),
-    }).then(getComments(post?.id));
-    return await response.json();
+      body: JSON.stringify(),
+    });
+    // .then(getComments(post?.id));
+  };
+  const renderComments = () => {
+    if (comments) {
+      return comments.map((comment) => {
+        return <p>{comment.body}</p>;
+      });
+    }
   };
 
   return (
@@ -168,6 +185,7 @@ function Detail({ posts }) {
               <Button onClick={submitComment()}>댓글 작성</Button>
             </div>
           </div>
+          <div className="commentsList">{renderComments()}</div>
         </div>
       </div>
     </>

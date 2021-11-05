@@ -15,6 +15,7 @@ function App({ imageUploader }) {
       },
       body: JSON.stringify(data),
     });
+    setPosts({ ...posts, data });
     return await response.json();
   };
 
@@ -31,8 +32,7 @@ function App({ imageUploader }) {
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<PostLists posts={posts} />} />
-        <Route path="/:postTitle" element={<Detail posts={posts} />} />
-        {/* 라우트 추가 */}
+        <Route path="/:postId" element={<Detail posts={posts} />} />
         <Route
           path="/post"
           element={<CreatePost submitPost={submitPost} imageUploader={imageUploader} />}
