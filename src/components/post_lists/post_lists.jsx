@@ -1,18 +1,19 @@
 import React from "react";
+// import { useNavigate } from "react-router-dom";
+import Header from "../Header";
 import PostList from "../post_list/post_list";
 import styles from "./post_lists.module.css";
-import { BsSearch } from "react-icons/bs";
-import { useNavigate } from 'react-router-dom';
+// import { BsSearch } from "react-icons/bs";
 
 const PostLists = ({ posts }) => {
-  const navigate = useNavigate();
-  const onClick = () => {
-    navigate('/post');
-  };
-
+  // const navigate = useNavigate();
+  // const onClick = () => {
+  //   navigate("/post");
+  // };
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
+      <Header />
+      {/* <header className={styles.header}>
         <svg
           width="71"
           height="24"
@@ -30,9 +31,11 @@ const PostLists = ({ posts }) => {
           <a className={styles.search}>
             <BsSearch />
           </a>
-          <button className={styles.add} onClick={onClick}>새 글 작성</button>
+          <button className={styles.add} onClick={onClick}>
+            새 글 작성
+          </button>
         </div>
-      </header>
+      </header> */}
       <section className={styles.posts}>
         {Object.keys(posts).map((key) => (
           <PostList key={key} post={posts[key]} />

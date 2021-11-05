@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./app.css";
 import PostLists from "./components/post_lists/post_lists";
 import CreatePost from "./components/create_post/create_post";
+import Detail from "./components/detail/Detail";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-function App({imageUploader}) {
+function App({ imageUploader }) {
   const [posts, setPosts] = useState([]);
 
   const submitPost = async (data) => {
@@ -17,18 +18,25 @@ function App({imageUploader}) {
     return await response.json();
   };
 
-  useEffect(() =>
-    fetch(`https://limitless-sierra-67996.herokuapp.com/v1/posts?limit=30`)
-      .then((response) => response.json())
-      .then((result) => setPosts(result.results))
-      .catch((error) => console.log("error", error))
-  ,[]);
+  useEffect(
+    () =>
+      fetch(`https://limitless-sierra-67996.herokuapp.com/v1/posts?limit=30`)
+        .then((response) => response.json())
+        .then((result) => setPosts(result.results))
+        .catch((error) => console.log("error", error)),
+    []
+  );
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PostLists posts={posts} />} />
-        <Route path="/post" element={<CreatePost submitPost={submitPost} imageUploader={imageUploader}/>} />
+        <Route exact path="/" element={<PostLists posts={posts} />} />
+        <Route path="/:postId" element={<Detail posts={posts} />} />
+        {/* 라우트 추가 */}
+        <Route
+          path="/post"
+          element={<CreatePost submitPost={submitPost} imageUploader={imageUploader} />}
+        />
       </Routes>
     </BrowserRouter>
   );
