@@ -9,7 +9,7 @@ const PostList = ({ post }) => {
     <li
       className={styles.post}
       onClick={() => {
-        navigate(`/${post.id}`);
+        navigate(`/${post.title}`);
       }}
     >
       <img

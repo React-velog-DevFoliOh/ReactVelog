@@ -20,7 +20,7 @@ function App({ imageUploader }) {
 
   useEffect(
     () =>
-      fetch(`https://limitless-sierra-67996.herokuapp.com/v1/posts?limit=30`)
+      fetch(`https://limitless-sierra-67996.herokuapp.com/v1/posts?limit=30&sortBy=updatedAt:desc`)
         .then((response) => response.json())
         .then((result) => setPosts(result.results))
         .catch((error) => console.log("error", error)),
@@ -31,7 +31,7 @@ function App({ imageUploader }) {
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<PostLists posts={posts} />} />
-        <Route path="/:postId" element={<Detail posts={posts} />} />
+        <Route path="/:postTitle" element={<Detail posts={posts} />} />
         {/* 라우트 추가 */}
         <Route
           path="/post"

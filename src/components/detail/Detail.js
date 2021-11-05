@@ -1,24 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 import Header from "../Header";
+import { Tag, Button } from "../common/styledComponent";
+import { RiArrowLeftLine, RiArrowRightLine } from "react-icons/ri";
 import "./detail.scss";
 
 function Detail({ posts }) {
-  const { postId } = useParams();
-  const [post, setPost] = useState(
-    posts.filter((post) => {
-      return post.id == postId;
-    })[0]
-  );
+  const navigate = useNavigate();
+  const { postTitle } = useParams();
+
+  const [post, setPost] = useState();
   const [comments, setComments] = useState();
+  const [inputComment, setInputComment] = useState();
 
   useEffect(() => {
-    getComments(postId);
+    setPost(
+      posts.filter((post) => {
+        return post.title == postTitle;
+      })[0]
+    );
+    getComments(post?.id);
     return () => {
       setPost();
       setComments();
     };
-  }, []);
+  }, [postTitle]);
   const serverUrl = "https://limitless-sierra-67996.herokuapp.com/v1";
   // const getPosts = () => {
   //   const url = serverUrl + "/posts/" + postId;
@@ -61,32 +68,79 @@ function Detail({ posts }) {
   const renderTags = (tags) => {
     if (tags) {
       return tags.map((tag) => {
-        return <span className="tag">{tag}</span>;
+        return <Tag>{tag}</Tag>;
       });
     }
   };
 
   const renderThumbnail = (thumbnail) => {
     if (thumbnail) {
-      return <img src={thumbnail} alt="" />;
+      return <img className="thumbnail" src={thumbnail} alt="" />;
     }
   };
 
   const renderBody = (body) => {
     if (body) {
-      return <p>{body}</p>;
+      return <p className="content">{body}</p>;
     }
   };
 
-  const renderPrev = (prev) => {
-    if (prev) {
-      return <div className="prev">이전 포스트</div>;
+  const renderPrev = () => {
+    const prevPost = posts[posts.indexOf(post) - 1];
+
+    if (prevPost) {
+      return (
+        <div
+          className="prev"
+          onClick={() => {
+            navigate(`/${prevPost.title}`);
+          }}
+        >
+          <RiArrowLeftLine className="prevBtn" />
+          <div>
+            <p>이전 포스트</p>
+            <h3>{prevPost.title}</h3>
+          </div>
+        </div>
+      );
     }
   };
-  const renderNext = (next) => {
-    if (next) {
-      return <div className="next"></div>;
+  const renderNext = () => {
+    const nextPost = posts[posts.indexOf(post) + 1];
+    if (nextPost) {
+      return (
+        <div
+          className="next"
+          onClick={() => {
+            navigate(`/${nextPost.title}`);
+          }}
+        >
+          <div>
+            <p>다음 포스트</p>
+            <h3>{nextPost.title}</h3>
+          </div>
+          <RiArrowRightLine className="nextBtn" />
+        </div>
+      );
     }
+  };
+
+  const onInput = (e) => {
+    setInputComment(e.target.value);
+  };
+  const submitComment = async () => {
+    const response = await fetch(serverUrl + "/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: Date.now(),
+        postId: post?.id,
+        body: inputComment,
+      }),
+    }).then(getComments(post?.id));
+    return await response.json();
   };
 
   return (
@@ -99,7 +153,7 @@ function Detail({ posts }) {
           <div className="tags">{renderTags(post?.tags)}</div>
         </div>
         <div className="body">
-          {renderThumbnail(post?.id)}
+          {renderThumbnail(post?.thumbnail)}
           {renderBody(post?.body)}
         </div>
         <div className="foot">
@@ -108,10 +162,10 @@ function Detail({ posts }) {
             <div>{renderNext()}</div>
           </div>
           <div className="comments">
-            <h4>{comments?.length}개의 댓글 </h4>
-            <textarea placeholder="댓글을 작성하세요"></textarea>
+            <h4>{comments?.length || "0"}개의 댓글 </h4>
+            <textarea onInput={(e) => onInput(e)} placeholder="댓글을 작성하세요"></textarea>
             <div>
-              <button>댓글 작성</button>
+              <Button onClick={submitComment()}>댓글 작성</Button>
             </div>
           </div>
         </div>

@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import styles from "./create_post.module.css";
 import { useNavigate } from "react-router-dom";
 import ThumbnailInput from "./../thumbnail_input/thumbnail_input";
+import { Tag } from "../common/styledComponent";
 
 const CreatePost = ({ submitPost, imageUploader }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState();
-  const [tag, setTag] = useState();
-  const [tags, setTags] = useState(["완", "투"]);
+  const [tags, setTags] = useState([]);
   const [body, setBody] = useState();
-  const [thumbnail, setThumbnail] = useState({fileName:null, fileURL:null});
+  const [thumbnail, setThumbnail] = useState({ fileName: null, fileURL: null });
 
   const goBack = () => {
     navigate("/");
@@ -17,7 +17,7 @@ const CreatePost = ({ submitPost, imageUploader }) => {
   const onClick = (event) => {
     if (event.target == null) return;
     event.preventDefault();
-    submitPost({ id: Date.now(), title, tags, body, thumbnail:thumbnail.fileURL});
+    submitPost({ id: Date.now(), title, tags, body, thumbnail: thumbnail.fileURL });
     goBack();
   };
   const onChange = (event, setFn) => {
@@ -25,8 +25,25 @@ const CreatePost = ({ submitPost, imageUploader }) => {
     event.preventDefault();
     setFn(event.target.value);
   };
-  const onThumbnailChange = thumbnail => {
-    setThumbnail({fileName:thumbnail.name, fileURL:thumbnail.url});
+  const onThumbnailChange = (thumbnail) => {
+    setThumbnail({ fileName: thumbnail.name, fileURL: thumbnail.url });
+  };
+  const onKeyDown = (event) => {
+    if (event.keyCode == 13 || event.keyCode == 188) {
+      let tagArray = [...tags];
+      if (event.target.value) {
+        tagArray.push(event.target.value);
+        let tagSet = new Set(tagArray);
+        setTags([...tagSet]);
+        event.preventDefault();
+        event.target.value = "";
+      }
+    }
+  };
+  const renderTags = () => {
+    return tags.map((tag) => {
+      return <Tag>{tag}</Tag>;
+    });
   };
 
   return (
@@ -39,10 +56,11 @@ const CreatePost = ({ submitPost, imageUploader }) => {
         />
         <div className={styles.divider}></div>
         <div className={styles.tags}>
+          {renderTags()}
           <input
             className={styles.tag}
             placeholder="태그를 입력하세요"
-            onChange={(event) => onChange(event, setTag)}
+            onKeyDown={(event) => onKeyDown(event)}
           />
         </div>
         <textarea
@@ -69,7 +87,7 @@ const CreatePost = ({ submitPost, imageUploader }) => {
         </div>
         <div className={styles.buttons}>
           <ThumbnailInput
-          name={thumbnail.fileName}
+            name={thumbnail.fileName}
             imageUploader={imageUploader}
             onThumbnailChange={onThumbnailChange}
           />
