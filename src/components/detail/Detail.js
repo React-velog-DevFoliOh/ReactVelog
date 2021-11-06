@@ -39,17 +39,6 @@ function Detail({ posts }) {
     };
   }, [post]);
   const serverUrl = "https://limitless-sierra-67996.herokuapp.com/v1";
-  // const getPosts = () => {
-  //   const url = serverUrl + "/posts/" + postId;
-  //   fetch(url, {
-  //     method: "GET",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       setPost(result);
-  //     })
-  //     .catch((err) => alert(err));
-  // };
   const getComments = (postId = "") => {
     fetch(serverUrl + "/comments", {
       method: "GET",
@@ -148,10 +137,10 @@ function Detail({ posts }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(),
-    });
-    // .then(getComments(post?.id));
+      body: JSON.stringify(data),
+    }).then(getComments(post?.id));
   };
+
   const renderComments = () => {
     if (comments) {
       return comments.map((comment) => {
@@ -182,7 +171,7 @@ function Detail({ posts }) {
             <h4>{comments?.length || "0"}개의 댓글 </h4>
             <textarea onInput={(e) => onInput(e)} placeholder="댓글을 작성하세요"></textarea>
             <div>
-              <Button onClick={submitComment()}>댓글 작성</Button>
+              <Button onClick={submitComment}>댓글 작성</Button>
             </div>
           </div>
           <div className="commentsList">{renderComments()}</div>

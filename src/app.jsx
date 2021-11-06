@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./app.css";
 import PostLists from "./components/post_lists/post_lists";
 import CreatePost from "./components/create_post/create_post";
@@ -41,9 +41,10 @@ function App({ imageUploader }) {
         .catch((error) => console.log("error", error)),
     []
   );
-  const increasingPage = () => {
+  const increasingPage = useCallback(() => {
     setPage((prev) => prev + 1);
-  };
+  });
+
   return (
     <BrowserRouter>
       <Routes>
