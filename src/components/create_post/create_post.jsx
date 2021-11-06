@@ -17,7 +17,7 @@ const CreatePost = ({ submitPost, imageUploader }) => {
   const onClick = (event) => {
     if (event.target == null) return;
     event.preventDefault();
-    submitPost({ id: Date.now(), title, tags, body, thumbnail: thumbnail.fileURL });
+    submitPost({ title, tags, body, thumbnail: thumbnail.fileURL });
     goBack();
   };
   const onChange = (event, setFn) => {
@@ -29,7 +29,7 @@ const CreatePost = ({ submitPost, imageUploader }) => {
     setThumbnail({ fileName: thumbnail.name, fileURL: thumbnail.url });
   };
   const onKeyDown = (event) => {
-    if (event.keyCode == 13 || event.keyCode == 188) {
+    if (event.keyCode === 13 || event.keyCode === 188) {
       let tagArray = [...tags];
       if (event.target.value) {
         tagArray.push(event.target.value);
