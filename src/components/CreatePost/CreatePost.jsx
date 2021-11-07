@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ThumbnailInput from "../ThumbnailInput/ThumbnailInput";
 import { Tag } from "../common/styledComponent";
 
-const CreatePost = ({ submitPost, imageUploader }) => {
+const CreatePost = ({ submitPost, imageUploader, getPosts }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState();
   const [tags, setTags] = useState([]);
@@ -14,11 +14,12 @@ const CreatePost = ({ submitPost, imageUploader }) => {
   const goBack = () => {
     navigate("/");
   };
-  const onClick = (event) => {
+  const onClick = async (event) => {
     if (event.target == null) return;
     event.preventDefault();
-    submitPost({ title, tags, body, thumbnail });
+    await submitPost({ title, tags, body, thumbnail });
     goBack();
+    getPosts();
   };
   const onChange = (event, setFn) => {
     if (event.target == null) return;

@@ -8,16 +8,18 @@ import Editor from "./components/Editor/Editor";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App({ imageUploader }) {
   const [posts, setPosts] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const submitPost = async (data) => {
-    const response = await fetch(`https://limitless-sierra-67996.herokuapp.com/v1/posts`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    setPosts({ ...posts, data });
+    const response = await fetch(
+      `https://limitless-sierra-67996.herokuapp.com/v1/posts`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     return await response.json();
   };
   const updatePost = async (data) => {
@@ -31,30 +33,45 @@ function App({ imageUploader }) {
         body: JSON.stringify(data),
       }
     );
-    setPosts({ ...posts, data });
     return await response.json();
   };
 
   useEffect(() => {
+    if(page == 1)
+      return;
     fetch(
-      `https://limitless-sierra-67996.herokuapp.com/v1/posts?limit=10&sortBy=updatedAt:desc&page=${page}`
+      `https://limitless-sierra-67996.herokuapp.com/v1/posts?limit=10&sortBy=updatedAt:desc&page=${page}`,{
+        method: "GET",
+        headers: {
+          "accept": "application/json"
+        }
+      }
     )
       .then((response) => response.json())
       .then((result) => setPosts((prev) => [...prev, ...result.results]))
       .catch((error) => console.log("error", error));
   }, [page]);
 
-  useEffect(
-    () =>
-      fetch(`https://limitless-sierra-67996.herokuapp.com/v1/posts?limit=10&sortBy=updatedAt:desc`)
-        .then((response) => response.json())
-        .then((result) => setPosts(result.results))
-        .catch((error) => console.log("error", error)),
-    []
-  );
-  const increasingPage = useCallback(() => {
+  const getPosts = async () =>{
+    await fetch(
+      `https://limitless-sierra-67996.herokuapp.com/v1/posts?limit=10&sortBy=updatedAt:desc`,{
+        method: "GET",
+        headers: {
+          "accept": "application/json"
+        }
+      }
+    )
+      .then((response) => response.json())
+      .then((result) => setPosts(result.results))
+      .catch((error) => console.log("error", error));
+    setPage(1);
+}
+
+  useEffect(() => getPosts,[]);
+
+  const increasingPage = () => {
     setPage((prev) => prev + 1);
-  });
+  };
 
   return (
     <BrowserRouter>
@@ -62,16 +79,20 @@ function App({ imageUploader }) {
         <Route
           exact
           path="/"
-          element={<PostLists posts={posts} increasingPage={increasingPage} />}
+          element={<PostLists posts={posts} increasingPage={increasingPage} getPosts={getPosts}/>}
         />
-        <Route path="/:postId" element={<Detail posts={posts} />} />
+        <Route path="/:postId" element={<Detail posts={posts} getPosts={getPosts}/>} />
         <Route
           path="/post"
-          element={<CreatePost submitPost={submitPost} imageUploader={imageUploader} />}
+          element={
+            <CreatePost submitPost={submitPost} imageUploader={imageUploader} getPosts={getPosts}/>
+          }
         />
         <Route
           path="/edit/:postId"
-          element={<Editor updatePost={updatePost} imageUploader={imageUploader} />}
+          element={
+            <Editor updatePost={updatePost} imageUploader={imageUploader} getPosts={getPosts}/>
+          }
         />
       </Routes>
     </BrowserRouter>

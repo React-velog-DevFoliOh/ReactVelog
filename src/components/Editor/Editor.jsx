@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import ThumbnailInput from "../ThumbnailInput/ThumbnailInput";
 import { Tag } from "../common/styledComponent";
 
-const Editor = ({ updatePost, imageUploader }) => {
+const Editor = ({ updatePost, imageUploader, getPosts }) => {
   const { postId } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState();
@@ -41,11 +41,12 @@ const Editor = ({ updatePost, imageUploader }) => {
   const goBack = () => {
     navigate("/");
   };
-  const onClick = (event) => {
+  const onClick = async(event) => {
     if (event.target == null) return;
     event.preventDefault();
-    updatePost({ id : postId, title, tags, body, thumbnail });
+    await updatePost({ id : postId, title, tags, body, thumbnail });
     goBack();
+    getPosts();
   };
   const onChange = (event, setFn) => {
     if (event.target == null) return;

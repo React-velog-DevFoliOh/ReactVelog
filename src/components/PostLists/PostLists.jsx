@@ -3,7 +3,7 @@ import Header from "../Header/Header";
 import PostList from "../PostList/PostList";
 import styles from "./postLists.module.css";
 
-const PostLists = ({ posts, increasingPage }) => {
+const PostLists = ({ posts, increasingPage, getPosts }) => {
   const loader = useRef(null);
 
   const handleObserver = useCallback((entries) => {
@@ -25,10 +25,10 @@ const PostLists = ({ posts, increasingPage }) => {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header getPosts={getPosts}/>
       <section className={styles.postsContainer}>
       <div className={styles.posts}>
-        {Object.keys(posts).map((key) => (
+        {posts && Object.keys(posts).map((key) => (
           <PostList key={key} post={posts[key]} />
         ))}
         <div ref={loader} />

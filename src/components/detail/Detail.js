@@ -11,7 +11,7 @@ import { renderDateString } from "../common/commonFunctions";
 
 // import { useConfirm } from "../common/useConfirm";
 
-function Detail({ posts }) {
+function Detail({ getPosts }) {
   const navigate = useNavigate();
   const { postId } = useParams();
   const [post, setPost] = useState();
@@ -78,14 +78,15 @@ function Detail({ posts }) {
       .catch((err) => console.error(err));
   };
 
-  const deletePost = (postId) => {
-    fetch(`${serverUrl}/posts/${postId}`, {
+  const deletePost = async(postId) => {
+    await fetch(`${serverUrl}/posts/${postId}`, {
       method: "Delete",
       headers: {
         accept: "*/*",
       },
     }).catch((err) => console.error(err));
     navigate("/");
+    getPosts();
   };
 
   const goEdit = () => {
@@ -201,7 +202,7 @@ function Detail({ posts }) {
 
   return (
     <div class="container">
-      <Header />
+      <Header getPosts={getPosts}/>
       <div className="detail">
         <div className="head">
           <h1 className="title">{post?.title}</h1>

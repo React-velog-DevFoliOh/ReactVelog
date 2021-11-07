@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
 import { useScroll } from "./../common/useScroll";
 
-function Header() {
+function Header({getPosts}) {
   const { scrollY, scrollDirection } = useScroll();
   const navigate = useNavigate();
   const setMarginTop = () => {
@@ -28,6 +28,7 @@ function Header() {
               data-testid="velog-logo"
               className="velog-logo"
               onClick={() => {
+                getPosts();
                 navigate("/");
               }}
             >
@@ -56,6 +57,7 @@ function Header() {
                 data-testid="velog-logo"
                 className="velog-logo"
                 onClick={() => {
+                  getPosts();
                   navigate("/");
                 }}
               >
