@@ -1,15 +1,30 @@
+.headerContainer{
+  height: 4rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .header {
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: auto;
-  margin-right: auto;
   padding: 0;
-  height: 4rem;
   -webkit-box-align: center;
   -webkit-box-pack: justify;
   justify-content: space-between;
   width: 1728px;
+}
+.navBar{
+  display: block;
+  position: fixed;
+  top: 0px;
+  background: white;
+  width: 100%;
+  z-index: 10;
+  box-shadow: rgb(0 0 0 / 8%) 0px 0px 8px;
+  padding: 0;
+  transition: all 0.5s;
 }
 
 .logo{
