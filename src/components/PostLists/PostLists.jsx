@@ -1,4 +1,4 @@
-import React, {useRef, useCallback, useEffect} from "react";
+import React, { useRef, useCallback, useEffect } from "react";
 import Header from "../Header/Header";
 import PostList from "../PostList/PostList";
 import styles from "./postLists.module.css";
@@ -17,21 +17,22 @@ const PostLists = ({ posts, increasingPage }) => {
     const option = {
       root: null,
       rootMargin: "20px",
-      threshold: 0
+      threshold: 0,
     };
     const observer = new IntersectionObserver(handleObserver, option);
     if (loader.current) observer.observe(loader.current);
   }, [handleObserver]);
 
-
   return (
     <div className={styles.container}>
       <Header />
-        <section className={styles.posts}>
-          {Object.keys(posts).map((key) => (
-            <PostList key={key} post={posts[key]} />
-          ))}
-          <div ref={loader} />
+      <section className={styles.postsContainer}>
+      <div className={styles.posts}>
+        {Object.keys(posts).map((key) => (
+          <PostList key={key} post={posts[key]} />
+        ))}
+        <div ref={loader} />
+      </div>
       </section>
     </div>
   );
