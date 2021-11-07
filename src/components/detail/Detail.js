@@ -19,32 +19,6 @@ function Detail({ getPosts }) {
   const [inputComment, setInputComment] = useState();
   const [modal, setModal] = useState(false);
 
-  // const [prevPost, setPrevPost] = useState();
-  // const [nextPost, setNextPost] = useState();
-
-  // useEffect(() => {
-  //   setPost(
-  //     posts.filter((post) => {
-  //       return post.id == postId;
-  //     })[0]
-  //   );
-
-  //   getComments(postId);
-  //   return () => {
-  //     setPost();
-  //     setComments();
-  //   };
-  // }, [postId]);
-  // useEffect(() => {
-  //   setPrevPost(posts[posts.indexOf(post) - 1]);
-  //   setNextPost(posts[posts.indexOf(post) + 1]);
-
-  //   return () => {
-  //     setPrevPost();
-  //     setNextPost();
-  //   };
-  // }, [post]);
-
   useEffect(() => {
     getPost(postId);
     getComments(postId);
@@ -93,7 +67,6 @@ function Detail({ getPosts }) {
     navigate(`/edit/${postId}`);
   };
 
-  // const onDelete = useConfirm("삭제하시겠습니까?", () => );
   const onDelete = () => {
     setModal(true);
   };
@@ -113,43 +86,6 @@ function Detail({ getPosts }) {
       return <p className="content">{body}</p>;
     }
   };
-
-  // const renderPrev = () => {
-  //   if (prevPost) {
-  //     return (
-  //       <div
-  //         className="prev"
-  //         onClick={() => {
-  //           navigate(`/${prevPost.id}`);
-  //         }}
-  //       >
-  //         <RiArrowLeftLine className="prevBtn" />
-  //         <div>
-  //           <p>이전 포스트</p>
-  //           <h3>{prevPost.title}</h3>
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-  // };
-  // const renderNext = () => {
-  //   if (nextPost) {
-  //     return (
-  //       <div
-  //         className="next"
-  //         onClick={() => {
-  //           navigate(`/${nextPost.id}`);
-  //         }}
-  //       >
-  //         <div>
-  //           <p>다음 포스트</p>
-  //           <h3>{nextPost.title}</h3>
-  //         </div>
-  //         <RiArrowRightLine className="nextBtn" />
-  //       </div>
-  //     );
-  //   }
-  // };
 
   const inputCommentRef = useRef();
   const onInput = (e) => {

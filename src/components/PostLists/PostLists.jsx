@@ -16,7 +16,7 @@ const PostLists = ({ posts, increasingPage, getPosts }) => {
   useEffect(() => {
     const option = {
       root: null,
-      rootMargin: "20px",
+      rootMargin: "0px",
       threshold: 0,
     };
     const observer = new IntersectionObserver(handleObserver, option);
@@ -31,8 +31,8 @@ const PostLists = ({ posts, increasingPage, getPosts }) => {
         {posts && Object.keys(posts).map((key) => (
           <PostList key={key} post={posts[key]} />
         ))}
-        <div ref={loader} />
       </div>
+        <div ref={loader}/>
       </section>
     </div>
   );

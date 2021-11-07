@@ -36,6 +36,8 @@ function App({ imageUploader }) {
     return await response.json();
   };
 
+  useEffect(() => getPosts,[]);
+
   useEffect(() => {
     if(page == 1)
       return;
@@ -67,7 +69,6 @@ function App({ imageUploader }) {
     setPage(1);
 }
 
-  useEffect(() => getPosts,[]);
 
   const increasingPage = () => {
     setPage((prev) => prev + 1);
