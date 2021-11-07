@@ -4,6 +4,7 @@
 }
 body {
   height: 100vh;
+  background: rgb(248, 249, 250)
 }
 
 #root {

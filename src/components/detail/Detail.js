@@ -170,7 +170,7 @@ function Detail({ posts }) {
   };
 
   return (
-    <>
+    <div class="container">
       <Header />
       <div className="detail">
         <div className="head">
@@ -208,7 +208,7 @@ function Detail({ posts }) {
           <div className="commentsList">{renderComments()}</div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
