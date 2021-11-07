@@ -119,7 +119,10 @@
     font-weight: bold;
     align-items: center;
 }
-
+.temporary{
+    background-color: rgb(233, 236, 239);
+    color:rgb(73, 80, 87);
+}
 .submit{
     background-color: #B39DDB;
     color: white;
