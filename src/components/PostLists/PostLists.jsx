@@ -16,7 +16,7 @@ const PostLists = ({ posts, increasingPage, getPosts }) => {
   useEffect(() => {
     const option = {
       root: null,
-      rootMargin: "0px",
+      rootMargin: "10px",
       threshold: 0,
     };
     const observer = new IntersectionObserver(handleObserver, option);
