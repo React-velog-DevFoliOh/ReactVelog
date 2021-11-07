@@ -12,7 +12,7 @@
   width: 1728px;
 }
 
-.logo{
+.logo {
   cursor: pointer;
   font-size: 1.3125rem;
   text-decoration: none;
@@ -48,20 +48,20 @@
   color: white;
 }
 
-@media (max-width: 1919px){
- .header {
+@media (max-width: 1919px) {
+  .header {
     width: 1376px;
   }
 }
 
-@media (max-width: 1440px){
+@media (max-width: 1440px) {
   .header {
-     width: 1024px;
+    width: 1024px;
   }
 }
- 
-@media (max-width: 1056px){
+
+@media (max-width: 1056px) {
   .header {
-      width: calc(100% - 2rem);
+    width: calc(100% - 2rem);
   }
 }

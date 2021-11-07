@@ -29,4 +29,55 @@ export const Button = styled.button`
   padding: 0px 1.25rem;
   height: 2rem;
   font-size: 1rem;
+  &:hover {
+    opacity: 0.8;
+  }
+  &.cancel {
+    background: rgb(134, 142, 150);
+  }
+  & + button {
+    margin-left: 0.5rem;
+  }
+`;
+
+export const ModalWrapper = styled.div`
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  & > div {
+    width: 25 rem;
+    border-radius: 4px;
+    background: white;
+    padding: 2rem 1.5rem;
+    box-shadow: rgb(0 0 0 / 9%) 0px 2px 12px 0px;
+    h3 {
+      margin: 0px;
+      font-size: 1.5rem;
+      color: rgb(52, 58, 64);
+      line-height: 1.5;
+      font-weight: bold;
+    }
+    p {
+      line-height: 1.5;
+      font-size: 1rem;
+      color: rgb(73, 80, 87);
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      white-space: pre-wrap;
+    }
+    div {
+      margin-top: 2 rem;
+      display: flex;
+      -webkit-box-pack: end;
+      justify-content: flex-end;
+    }
+  }
 `;

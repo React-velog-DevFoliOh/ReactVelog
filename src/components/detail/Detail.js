@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Header from "../Header/Header";
+import Comment from "./Comment";
+import Modal from "../common/Modal";
 import { Tag, Button } from "../common/styledComponent";
+// import { RiArrowLeftLine, RiArrowRightLine } from "react-icons/ri";
 import "./detail.scss";
-import { renderDateString } from "./../common/commonFunctions";
+import { renderDateString } from "../common/commonFunctions";
 
-import { useConfirm } from "../common/useConfirm";
+// import { useConfirm } from "../common/useConfirm";
 
 function Detail({ posts }) {
   const navigate = useNavigate();
@@ -14,9 +17,10 @@ function Detail({ posts }) {
   const [post, setPost] = useState();
   const [comments, setComments] = useState();
   const [inputComment, setInputComment] = useState();
+  const [modal, setModal] = useState(false);
 
-  //  const [prevPost, setPrevPost] = useState();
-  //  const [nextPost, setNextPost] = useState();
+  // const [prevPost, setPrevPost] = useState();
+  // const [nextPost, setNextPost] = useState();
 
   // useEffect(() => {
   //   setPost(
@@ -78,7 +82,7 @@ function Detail({ posts }) {
     fetch(`${serverUrl}/posts/${postId}`, {
       method: "Delete",
       headers: {
-        "accept": "*/*"
+        accept: "*/*",
       },
     }).catch((err) => console.error(err));
     navigate("/");
@@ -88,8 +92,10 @@ function Detail({ posts }) {
     navigate(`/edit/${postId}`);
   };
 
-  const onDelete = useConfirm('삭제하시겠습니까?', () => deletePost(postId));
-
+  // const onDelete = useConfirm("삭제하시겠습니까?", () => );
+  const onDelete = () => {
+    setModal(true);
+  };
 
   const renderTags = (tags) => {
     if (tags) return tags.map((tag) => <Tag>{tag}</Tag>);
@@ -144,27 +150,51 @@ function Detail({ posts }) {
   //   }
   // };
 
+  const inputCommentRef = useRef();
   const onInput = (e) => {
     setInputComment(e.target.value);
   };
 
-  const submitComment = async () => {
-    const data = { postId, body: inputComment };
-    await fetch(serverUrl + "/comments", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+  const submitComment = async (mode, message, id) => {
+    let data = {};
+    switch (mode) {
+      case "create":
+        data = { postId, body: message };
+        await fetch(serverUrl + "/comments", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        break;
+      case "update":
+        data = { body: message };
+        await fetch(serverUrl + "/comments/" + id, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        break;
+      case "delete":
+        await fetch(serverUrl + "/comments/" + id, {
+          method: "DELETE",
+        });
+        break;
+      default:
+        console.log("Submit Comment has Error");
+    }
     getComments(postId);
+    inputCommentRef.current.value = "";
   };
 
   const renderComments = () => {
     return (
       comments &&
       Object.keys(comments).map((key) => (
-        <li key={key}>{comments[key].body}</li>
+        <Comment key={key} comment={comments[key]} submitComment={submitComment} />
       ))
     );
   };
@@ -182,6 +212,18 @@ function Detail({ posts }) {
             <span className="delete" onClick={onDelete}>
               삭제
             </span>
+            {modal && (
+              <Modal
+                title={"포스트 삭제"}
+                message={"정말로 삭제하시겠습니까?"}
+                onConfirm={() => {
+                  deletePost(postId);
+                }}
+                onCancel={() => {
+                  setModal(false);
+                }}
+              />
+            )}
           </div>
           <span className="time">{renderDateString(post?.updatedAt)}</span>
           <div className="tags">{renderTags(post?.tags)}</div>
@@ -198,11 +240,18 @@ function Detail({ posts }) {
           <div className="comments">
             <h4>{comments?.length || "0"}개의 댓글 </h4>
             <textarea
+              ref={inputCommentRef}
               onInput={(e) => onInput(e)}
               placeholder="댓글을 작성하세요"
             ></textarea>
             <div>
-              <Button onClick={submitComment}>댓글 작성</Button>
+              <Button
+                onClick={() => {
+                  submitComment("create", inputComment);
+                }}
+              >
+                댓글 작성
+              </Button>
             </div>
           </div>
           <div className="commentsList">{renderComments()}</div>

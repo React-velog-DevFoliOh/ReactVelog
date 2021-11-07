@@ -39,29 +39,40 @@ const CreatePost = ({ submitPost, imageUploader }) => {
         event.target.value = "";
       }
     }
+    if (event.keyCode === 8) {
+      console.log(tags[tags.length]);
+      cancelTag(tags[tags.length]);
+    }
   };
   const renderTags = () => {
-    return tags && tags.map((tag) => <Tag>{tag}</Tag>);
+    return tags && tags.map((tag) => <Tag onClick={() => cancelTag(tag)}>{tag}</Tag>);
+  };
+  const cancelTag = (tag) => {
+    let tagArray = [...tags];
+    let i = tagArray.indexOf(tag);
+    tagArray.splice(i, 1);
+    setTags(tagArray);
   };
 
   return (
     <div className={styles.container}>
       <section className={styles.section}>
         <header className={styles.header}>
-        <textarea
-          placeholder="제목을 입력하세요"
-          className={styles.title}
-          onChange={(event) => onChange(event, setTitle)}
-        />
-        <div className={styles.divider}></div>
-        <div className={styles.tags}>
-          {renderTags()}
-          <input
-            className={styles.tag}
-            placeholder="태그를 입력하세요"
-            onKeyDown={(event) => onKeyDown(event)}
+          <textarea
+            placeholder="제목을 입력하세요"
+            className={styles.title}
+            onChange={(event) => onChange(event, setTitle)}
           />
-          </div></header>
+          <div className={styles.divider}></div>
+          <div className={styles.tags}>
+            {renderTags()}
+            <input
+              className={styles.tag}
+              placeholder="태그를 입력하세요"
+              onKeyDown={(event) => onKeyDown(event)}
+            />
+          </div>
+        </header>
         <textarea
           className={styles.body}
           placeholder="당신의 이야기를 적어보세요..."

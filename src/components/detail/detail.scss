@@ -1,4 +1,4 @@
-.container{
+.container {
   background-color: white;
   .detail {
     display: flex;
@@ -32,10 +32,11 @@
         justify-content: flex-end;
         margin-bottom: -1.25rem;
         color: rgb(134, 142, 150);
-        .edit, .delete{
+        .edit,
+        .delete {
           cursor: pointer;
         }
-        .delete{
+        .delete {
           margin-left: 0.5rem;
         }
       }
@@ -46,12 +47,13 @@
     }
     .body {
       margin-top: 5rem;
+
       .thumbnail {
         width: 100%;
       }
       .content {
         margin: 1rem auto;
-        white-space: pre;
+        white-space: pre-wrap;
       }
     }
     .foot {
@@ -73,7 +75,7 @@
           padding: 0 1rem;
           background: rgb(248, 249, 250);
           cursor: pointer;
-  
+
           &:hover {
             .prevBtn {
               animation: moveLeft 0.5s;
@@ -85,7 +87,7 @@
               0% {
                 transform: translateX(0);
               }
-  
+
               50% {
                 transform: translateX(-0.5rem);
               }
@@ -97,7 +99,7 @@
               0% {
                 transform: translateX(0);
               }
-  
+
               50% {
                 transform: translateX(0.5rem);
               }
@@ -106,7 +108,7 @@
               }
             }
           }
-  
+
           .prevBtn,
           .nextBtn {
             width: 2rem !important;
@@ -125,7 +127,7 @@
           & > div {
             display: flex;
             flex-direction: column;
-  
+
             p {
               font-size: 0.75rem;
               line-height: 0.75rem;
@@ -182,9 +184,28 @@
     }
     .commentsList {
       margin-top: 2.5rem;
-      p {
+      li {
         margin: 1rem 0;
+        list-style: none;
+        .commentHead {
+          display: flex;
+          justify-content: space-between;
+        }
+        .comments {
+          margin-top: 1rem;
+        }
+        span {
+          cursor: pointer;
+          font-size: 0.875rem;
+          color: rgb(134, 142, 150);
+          & + span {
+            margin-left: 0.5rem;
+          }
+          &.button:hover {
+            text-decoration: underline;
+          }
+        }
       }
     }
-  }  
+  }
 }

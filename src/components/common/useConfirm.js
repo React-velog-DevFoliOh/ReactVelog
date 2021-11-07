@@ -1,3 +1,5 @@
+import { Modal } from "./styledComponent";
+
 export const useConfirm = (message = null, onConfirm, onCancel) => {
   if (!onConfirm || typeof onConfirm !== "function") {
     return;
