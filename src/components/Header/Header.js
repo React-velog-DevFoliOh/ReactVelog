@@ -10,6 +10,7 @@ function Header() {
   };
   return (
     <header className={styles.header}>
+      <div className={styles.logo}>
       <svg
         width="71"
         height="24"
@@ -26,10 +27,8 @@ function Header() {
           fill="#343A40"
         ></path>
       </svg>
+      </div>
       <div className={styles.tools}>
-        <a className={styles.search}>
-          <BsSearch />
-        </a>
         <button className={styles.add} onClick={onClick}>
           새 글 작성
         </button>

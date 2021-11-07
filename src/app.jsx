@@ -3,6 +3,8 @@ import "./app.css";
 import PostLists from "./components/PostLists/PostLists";
 import CreatePost from "./components/CreatePost/CreatePost";
 import Detail from "./components/Detail/Detail";
+import Editor from './components/Editor/Editor';
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App({ imageUploader }) {
   const [posts, setPosts] = useState([]);
@@ -12,6 +14,20 @@ function App({ imageUploader }) {
       `https://limitless-sierra-67996.herokuapp.com/v1/posts`,
       {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    setPosts({ ...posts, data });
+    return await response.json();
+  };
+  const updatePost = async (data) => {
+    const response = await fetch(
+      `https://limitless-sierra-67996.herokuapp.com/v1/posts/${data.id}`,
+      {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -60,6 +76,7 @@ function App({ imageUploader }) {
             <CreatePost submitPost={submitPost} imageUploader={imageUploader} />
           }
         />
+        <Route path="/edit/:postId" element={<Editor updatePost={updatePost} imageUploader={imageUploader}/>} />
       </Routes>
     </BrowserRouter>
   );

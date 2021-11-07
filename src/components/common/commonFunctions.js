@@ -22,7 +22,7 @@ const dateFromNow = (inputDate) => {
   const dateGap = parseInt(msGap / (1000*60*60*24)) ;
 
   if (dateGap < 1){
-    if (now.getDate() == stDate.getDate())
+    if (now.getDate() === stDate.getDate())
       return '오늘';
     else
       return '어제';

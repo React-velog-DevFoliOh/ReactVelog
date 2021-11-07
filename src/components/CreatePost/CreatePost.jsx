@@ -9,7 +9,7 @@ const CreatePost = ({ submitPost, imageUploader }) => {
   const [title, setTitle] = useState();
   const [tags, setTags] = useState([]);
   const [body, setBody] = useState();
-  const [thumbnail, setThumbnail] = useState({ fileName: null, fileURL: null });
+  const [thumbnail, setThumbnail] = useState();
 
   const goBack = () => {
     navigate("/");
@@ -17,7 +17,7 @@ const CreatePost = ({ submitPost, imageUploader }) => {
   const onClick = (event) => {
     if (event.target == null) return;
     event.preventDefault();
-    submitPost({ title, tags, body, thumbnail: thumbnail.fileURL });
+    submitPost({ title, tags, body, thumbnail });
     goBack();
   };
   const onChange = (event, setFn) => {
@@ -26,7 +26,7 @@ const CreatePost = ({ submitPost, imageUploader }) => {
     setFn(event.target.value);
   };
   const onThumbnailChange = (thumbnail) => {
-    setThumbnail({ fileName: thumbnail.name, fileURL: thumbnail.url });
+    setThumbnail(thumbnail.url);
   };
   const onKeyDown = (event) => {
     if (event.keyCode === 13 || event.keyCode === 188) {
@@ -41,14 +41,13 @@ const CreatePost = ({ submitPost, imageUploader }) => {
     }
   };
   const renderTags = () => {
-    return tags.map((tag) => {
-      return <Tag>{tag}</Tag>;
-    });
+    return tags && tags.map((tag) => <Tag>{tag}</Tag>);
   };
 
   return (
     <div className={styles.container}>
       <section className={styles.section}>
+        <header className={styles.header}>
         <textarea
           placeholder="제목을 입력하세요"
           className={styles.title}
@@ -62,9 +61,9 @@ const CreatePost = ({ submitPost, imageUploader }) => {
             placeholder="태그를 입력하세요"
             onKeyDown={(event) => onKeyDown(event)}
           />
-        </div>
+          </div></header>
         <textarea
-          className={styles.textarea}
+          className={styles.body}
           placeholder="당신의 이야기를 적어보세요..."
           onChange={(event) => onChange(event, setBody)}
         ></textarea>
@@ -87,7 +86,7 @@ const CreatePost = ({ submitPost, imageUploader }) => {
         </div>
         <div className={styles.buttons}>
           <ThumbnailInput
-            name={thumbnail.fileName}
+            thumbnail={thumbnail}
             imageUploader={imageUploader}
             onThumbnailChange={onThumbnailChange}
           />

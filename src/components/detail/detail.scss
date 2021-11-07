@@ -17,7 +17,26 @@
       margin-bottom: 2rem;
     }
     .time {
-      margin-bottom: 0.75rem;
+      -webkit-box-align: center;
+      align-items: center;
+      font-size: 1rem;
+      color: rgb(73, 80, 87);
+      display: flex;
+      -webkit-box-pack: justify;
+      justify-content: space-between;
+    }
+    .tools {
+      display: flex;
+      -webkit-box-pack: end;
+      justify-content: flex-end;
+      margin-bottom: -1.25rem;
+      color: rgb(134, 142, 150);
+      .edit, .delete{
+        cursor: pointer;
+      }
+      .delete{
+        margin-left: 0.5rem;
+      }
     }
     .tags {
       display: flex;
@@ -31,6 +50,7 @@
     }
     .content {
       margin: 1rem auto;
+      white-space: pre;
     }
   }
   .foot {
