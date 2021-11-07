@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import Header from "../Header";
+import Header from "../Header/Header";
 import { Tag, Button } from "../common/styledComponent";
 import { RiArrowLeftLine, RiArrowRightLine } from "react-icons/ri";
 import "./detail.scss";

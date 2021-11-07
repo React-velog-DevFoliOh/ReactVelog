@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./post_lists/post_lists.module.css";
+import styles from "./header.module.css";
 import { BsSearch } from "react-icons/bs";
 
 function Header() {

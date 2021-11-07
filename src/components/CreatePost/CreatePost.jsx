@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import styles from "./create_post.module.css";
+import styles from "./createPost.module.css";
 import { useNavigate } from "react-router-dom";
-import ThumbnailInput from "./../thumbnail_input/thumbnail_input";
+import ThumbnailInput from "../ThumbnailInput/ThumbnailInput";
 import { Tag } from "../common/styledComponent";
 
 const CreatePost = ({ submitPost, imageUploader }) => {
@@ -64,7 +64,7 @@ const CreatePost = ({ submitPost, imageUploader }) => {
           />
         </div>
         <textarea
-          className={styles.body}
+          className={styles.textarea}
           placeholder="당신의 이야기를 적어보세요..."
           onChange={(event) => onChange(event, setBody)}
         ></textarea>

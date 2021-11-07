@@ -1,7 +1,7 @@
 import React, {useRef, useCallback, useEffect} from "react";
-import Header from "../Header";
-import PostList from "../post_list/post_list";
-import styles from "./post_lists.module.css";
+import Header from "../Header/Header";
+import PostList from "../PostList/PostList";
+import styles from "./postLists.module.css";
 
 const PostLists = ({ posts, increasingPage }) => {
   const loader = useRef(null);

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "./app.css";
-import PostLists from "./components/post_lists/post_lists";
-import CreatePost from "./components/create_post/create_post";
-import Detail from "./components/detail/Detail";
+import PostLists from "./components/PostLists/PostLists";
+import CreatePost from "./components/CreatePost/CreatePost";
+import Detail from "./components/Detail/Detail";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App({ imageUploader }) {
   const [posts, setPosts] = useState([]);

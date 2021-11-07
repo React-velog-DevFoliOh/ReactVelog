@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./post_list.module.css";
+import styles from "./postList.module.css";
+import { renderDateString } from '../common/commonFunctions';
 
 const PostList = ({ post }) => {
   const {thumbnail, id, title, body, createdAt} =post;
@@ -21,7 +22,7 @@ const PostList = ({ post }) => {
       <div className={styles.contents}>
         <div className={styles.title}>{title}</div>
         <div className={styles.body}>{body}</div>
-        <div className={styles.createdAt}>{createdAt}</div>
+        <div className={styles.createdAt}>{createdAt && renderDateString(createdAt)}</div>
       </div>
     </li>
   );
