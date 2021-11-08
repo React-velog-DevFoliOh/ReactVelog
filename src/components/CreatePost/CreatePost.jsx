@@ -3,6 +3,7 @@ import styles from "./createPost.module.css";
 import { useNavigate } from "react-router-dom";
 import ThumbnailInput from "../ThumbnailInput/ThumbnailInput";
 import { Tag } from "../common/styledComponent";
+import { Theme } from "../../theme/theme";
 
 const CreatePost = ({ submitPost, imageUploader, getPosts }) => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const CreatePost = ({ submitPost, imageUploader, getPosts }) => {
 
   return (
     <div className={styles.container}>
-      <section className={styles.section}>
+      <Theme.Container className={styles.section}>
         <header className={styles.header}>
           <textarea
             placeholder="제목을 입력하세요"
@@ -79,7 +80,7 @@ const CreatePost = ({ submitPost, imageUploader, getPosts }) => {
           placeholder="당신의 이야기를 적어보세요..."
           onChange={(event) => onChange(event, setBody)}
         ></textarea>
-      </section>
+      </Theme.Container>
       <footer className={styles.footer}>
         <div className={styles.back} onClick={goBack}>
           <svg

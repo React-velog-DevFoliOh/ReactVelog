@@ -5,6 +5,8 @@ import Header from "../Header/Header";
 import Comment from "./Comment";
 import Modal from "../common/Modal";
 import { Tag, Button } from "../common/styledComponent";
+import { Theme } from "../../theme/theme";
+
 // import { RiArrowLeftLine, RiArrowRightLine } from "react-icons/ri";
 import "./detail.scss";
 import { renderDateString } from "../common/commonFunctions";
@@ -52,7 +54,7 @@ function Detail({ getPosts }) {
       .catch((err) => console.error(err));
   };
 
-  const deletePost = async(postId) => {
+  const deletePost = async (postId) => {
     await fetch(`${serverUrl}/posts/${postId}`, {
       method: "Delete",
       headers: {
@@ -138,8 +140,8 @@ function Detail({ getPosts }) {
 
   return (
     <div class="container">
-      <Header getPosts={getPosts}/>
-      <div className="detail">
+      <Header getPosts={getPosts} />
+      <Theme.Container className="detail">
         <div className="head">
           <h1 className="title">{post?.title}</h1>
           <div className="tools">
@@ -176,11 +178,11 @@ function Detail({ getPosts }) {
           </div> */}
           <div className="comments">
             <h4>{comments?.length || "0"}개의 댓글 </h4>
-            <textarea
+            <Theme.TextArea
               ref={inputCommentRef}
               onInput={(e) => onInput(e)}
               placeholder="댓글을 작성하세요"
-            ></textarea>
+            ></Theme.TextArea>
             <div>
               <Button
                 onClick={() => {
@@ -193,7 +195,7 @@ function Detail({ getPosts }) {
           </div>
           <div className="commentsList">{renderComments()}</div>
         </div>
-      </div>
+      </Theme.Container>
     </div>
   );
 }

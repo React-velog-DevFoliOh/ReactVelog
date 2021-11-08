@@ -1,4 +1,4 @@
-.headerContainer{
+.headerContainer {
   height: 4rem;
   width: 100%;
   display: flex;
@@ -15,7 +15,7 @@
   justify-content: space-between;
   width: 1728px;
 }
-.navBar{
+.navBar {
   display: block;
   position: fixed;
   top: 0px;
@@ -44,6 +44,7 @@
   flex-direction: row;
   align-items: center;
 }
+
 .add {
   background-color: white;
   border: 1px solid rgb(52, 58, 64);
@@ -54,7 +55,7 @@
   word-break: keep-all;
   cursor: pointer;
   font-weight: bold;
-  margin-right: 1rem;
+  margin: 0 1rem;
   color: rgb(52, 58, 64);
 }
 
